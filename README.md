@@ -10,14 +10,14 @@ Virtualized infinite scroll component for Svelte.
 ## Installation
 
 ```bash
-yarn add @adofaigg/svelte-virtualized-infinite-scroll
+yarn add @adofai-gg/svelte-virtualized-infinite-scroll
 ```
 
 ## Usage
 
 ```html
 <script lang="ts">
-  import VirtualizedScroll from "@adofaigg/svelte-virtualized-infinite-scroll";
+  import VirtualizedScroll from "@adofai-gg/svelte-virtualized-infinite-scroll";
 
   let totalCount = 100000;
 
