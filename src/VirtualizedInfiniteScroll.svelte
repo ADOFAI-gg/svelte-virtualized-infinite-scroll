@@ -15,6 +15,8 @@
 
   export let scrollContainer: string | HTMLElement;
 
+  let root: HTMLElement;
+
   $: totalItemHeight =
     typeof itemHeight === "number"
       ? itemHeight
@@ -34,8 +36,8 @@
   };
 
   const updateOffset = () => {
-    if (top != scroller.offsetTop) {
-      top = scroller.offsetTop;
+    if (top != root.offsetTop) {
+      top = root.offsetTop;
     }
   };
 
@@ -111,7 +113,7 @@
 </script>
 
 <div>
-  <div style="height: {totalHeight}px;" class="relative">
+  <div style="height: {totalHeight}px;" class="relative" bind:this={root}>
     {#each sliced as { item, index } (startIndex + index)}
       <div
         style="height: {height(index)}px; top: {height(index) *
