@@ -1,5 +1,5 @@
 {
-  "name": "@adofaigg/svelte-virtualized-infinite-scroll",
+  "name": "@adofai-gg/svelte-virtualized-infinite-scroll",
   "version": "1.0.0",
   "svelte": "dist/index.js",
   "module": "dist/index.mjs",
