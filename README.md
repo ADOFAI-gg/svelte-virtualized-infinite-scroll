@@ -1,26 +1,58 @@
-# svelte-typescript-component-template
+# Svelte Virtualized Infinite Scroll
 
-A base for building shareable Svelte components written in Typescript.
+Virtualized infinite scroll component for Svelte.
 
-This is based on [sveltejs/component-template](https://github.com/sveltejs/component-template) and allows consumers to import the .svelte components without requiring Typescript (see ["Consuming Components"](#consuming-components) below).
+## Features
+
+- Custom scroll elements
+- Variable heights
+
+## Installation
 
 ```bash
-npx degit mattjennings/svelte-typescript-component-template#main my-component
-cd my-component
-npm install # or yarn
+yarn add @adofaigg/svelte-virtualized-infinite-scroll
 ```
 
-Your component's source code lives in `src/Component.svelte`.
+## Usage
 
-You can create a package that exports multiple components by adding them to the `src` directory and editing `src/index.ts` to reexport them as named exports.
+```html
+<script lang="ts">
+  import VirtualizedScroll from "@adofaigg/svelte-virtualized-infinite-scroll";
 
-## Setting Up
+  let totalCount = 100000;
 
-- Run `npm init` (or `yarn init`)
-- Replace this README with your own
+  let data = [
+    /*...*/
+  ];
 
-## Consuming Components
+  const loadMore = () => {
+    // ...
+  };
 
-Your package.json has a `"svelte"` field pointing to `src/index.js`, which allows Svelte apps to import the source code directly, if they are using a bundler plugin like [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) or [svelte-loader](https://github.com/sveltejs/svelte-loader) (where [`resolve.mainFields`](https://webpack.js.org/configuration/resolve/#resolve-mainfields) in your webpack config includes `"svelte"`). **This is recommended.**
+  let scrollContainer: HTMLElement;
+</script>
+<div bind:this={scrollContainer}>
+    <VirtualizedScroll {data} itemHeight={100} let:item on:more={(e) => loadMore(e.detail.offset)} total={totalCount} {scrollContainer}>
+        <div>
+            {item.something}
+        </div>
+    </VirtualizedScroll>
+</div>
+```
 
-For everyone else, `npm run build` will bundle your component's source code into a plain JavaScript module (`dist/index.mjs`) and a UMD script (`dist/index.js`). This will happen automatically when you publish your component to npm, courtesy of the `prepublishOnly` hook in package.json.
+## Reference
+
+### Props
+
+| Prop            | Type        | Description                                                                           |
+| --------------- | ----------- | ------------------------------------------------------------------------------------- |
+| data            | Array<T>    | The array of data for the list                                                        |
+| gap             | number      | The spacing between the elements                                                      |
+| scrollContainer | HTMLElement | The element to capture scroll                                                         |
+| threshold       | number      | `more` event is called when the rest rest items are less then this value(default: 10) |
+
+### Events
+
+| Event | Details            | Description                           |
+| ----- | ------------------ | ------------------------------------- |
+| more  | { offset: number } | Called when scroll reaches the bottom |
