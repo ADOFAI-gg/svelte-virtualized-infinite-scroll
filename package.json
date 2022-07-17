@@ -1,6 +1,7 @@
 {
   "name": "@adofai-gg/svelte-virtualized-infinite-scroll",
-  "version": "1.0.1",
+  "license": "MIT",
+  "version": "1.0.2",
   "svelte": "dist/index.js",
   "module": "dist/index.mjs",
   "main": "dist/index.umd.js",
