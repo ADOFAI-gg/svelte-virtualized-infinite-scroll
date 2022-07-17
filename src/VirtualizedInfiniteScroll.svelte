@@ -33,12 +33,15 @@
 
   const onScroll = () => {
     scrollY = scroller.scrollTop;
+
+    updateOffset();
   };
 
   const updateOffset = () => {
-    if (top != root.offsetTop) {
+    try {
       top = root.offsetTop;
-    }
+      console.log(top);
+    } catch (e) {}
   };
 
   onMount(() => {
@@ -49,8 +52,6 @@
 
     scroller.addEventListener("scroll", onScroll);
 
-    scroller.addEventListener("resize", updateOffset);
-
     scrollY = scroller.scrollTop;
 
     updateOffset();
@@ -59,11 +60,7 @@
   });
 
   onDestroy(() => {
-    if (typeof window !== "undefined") {
-      scroller.removeEventListener("scroll", onScroll);
-
-      scroller.removeEventListener("resize", updateOffset);
-    }
+    scroller?.removeEventListener("scroll", onScroll);
   });
 
   let top = 0;
