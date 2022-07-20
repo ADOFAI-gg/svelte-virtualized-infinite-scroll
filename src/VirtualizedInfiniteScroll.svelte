@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
 
   type T = $$Generic;
 
@@ -11,38 +11,81 @@
 
   export let itemHeight: number | number[];
 
-  export let gap = 0;
-
   export let scrollContainer: string | HTMLElement;
+
+  let mounted: boolean = false;
 
   let root: HTMLElement;
 
-  $: totalItemHeight =
-    typeof itemHeight === "number"
-      ? itemHeight
-      : itemHeight.length
-      ? itemHeight.reduce((a, b) => a + b)
-      : 0;
+  $: if (mounted) refresh(data, scroller.clientHeight, itemHeight);
 
-  $: totalHeight =
-    (data.length - 1) * totalItemHeight + (gap * (data.length - 1) - gap);
-
-  let scrollY = 0;
+  let averageHeight = 0;
 
   let scroller: HTMLElement;
 
-  const onScroll = () => {
-    scrollY = scroller.scrollTop;
+  async function onScroll() {
+    const oldStart = startIndex;
 
-    updateOffset();
-  };
+    for (let v = 0; v < rows.length; v++) {
+      const row = rows[v];
+      if (!row) break;
+      heightMap[startIndex + v] = row.offsetHeight;
+    }
 
-  const updateOffset = () => {
-    try {
-      top = root.offsetTop;
-      console.log(top);
-    } catch (e) {}
-  };
+    let i = 0;
+    let y = 0;
+
+    const scrollTop = scroller.scrollTop;
+
+    while (i < data.length) {
+      const rowHeight = heightMap[i];
+
+      if (y + rowHeight > scrollTop - root.offsetTop) {
+        startIndex = i;
+        top = y;
+
+        break;
+      }
+
+      y += rowHeight;
+      i += 1;
+    }
+
+    while (i < data.length) {
+      y += heightMap[i];
+      i += 1;
+
+      if (y > scrollTop + scroller.clientHeight) break;
+    }
+
+    endIndex = i;
+
+    const remaining = data.length - endIndex;
+
+    averageHeight = y / endIndex;
+
+    while (i < data.length) heightMap[i++] = averageHeight;
+
+    bottom = remaining * averageHeight;
+
+    if (startIndex < oldStart) {
+      await tick();
+
+      let expected = 0;
+      let actual = 0;
+
+      for (let i = 0; i < oldStart; i++) {
+        if (rows[i - startIndex]) {
+          expected += heightMap[i];
+          actual += rows[i - startIndex].offsetHeight;
+        }
+      }
+
+      const d = actual - expected;
+
+      scroller.scrollTo(0, scrollTop + d);
+    }
+  }
 
   onMount(() => {
     scroller =
@@ -54,37 +97,62 @@
 
     scrollY = scroller.scrollTop;
 
-    updateOffset();
+    window.addEventListener("resize", onScroll);
 
-    calculate();
+    mounted = true;
   });
 
   onDestroy(() => {
     scroller?.removeEventListener("scroll", onScroll);
+
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", onScroll);
+    }
+
+    mounted = false;
   });
 
   let top = 0;
+  let bottom = 0;
 
   let startIndex = 0;
   let endIndex = 0;
 
-  $: calculate = () => {
-    const offset = Math.max(scrollY - top, 0);
-    const start = Math.floor(offset / (totalItemHeight + gap));
-    const count = Math.ceil(
-      (scrollY - top + scroller.clientHeight - offset) / (totalItemHeight + gap)
-    );
+  let rows: HTMLElement[] = [];
 
-    if (startIndex != start) startIndex = start;
+  const heightMap: number[] = [];
 
-    const end = Math.min(start + count, data.length - 1);
+  async function refresh(
+    items: T[],
+    viewportHeight: number,
+    itemHeight: number | number[]
+  ) {
+    const scrollTop = scroller.scrollTop;
 
-    if (endIndex != end) endIndex = end;
-  };
+    await tick();
 
-  $: {
-    if (scroller) {
-      calculate();
+    let contentHeight = top - scrollTop;
+
+    let i = startIndex;
+
+    while (contentHeight < viewportHeight && i < items.length) {
+      let row = rows[i - startIndex];
+
+      if (!row) {
+        endIndex = i + 1;
+
+        await tick();
+
+        row = rows[i - startIndex];
+      }
+
+      if (!row) return;
+
+      const rowHeight = (heightMap[i] = row.offsetHeight);
+
+      contentHeight += rowHeight;
+
+      i++;
     }
   }
 
@@ -101,25 +169,18 @@
   $: sliced = data
     .slice(startIndex, endIndex)
     .map((x, i) => ({ item: x, index: i }));
-
-  $: height = (index: number) => {
-    if (typeof itemHeight === "number") return itemHeight;
-
-    return itemHeight[index];
-  };
 </script>
 
 <div>
-  <div style="height: {totalHeight}px;" class="relative" bind:this={root}>
+  <div
+    class="flex flex-col"
+    bind:this={root}
+    style="padding-top: {top}px; padding-bottom: {bottom}px;"
+  >
     {#each sliced as { item, index } (startIndex + index)}
-      <div
-        style="height: {height(index)}px; top: {height(index) *
-          (startIndex + index) +
-          gap * (startIndex + index)}px;"
-        class="absolute left-0 w-full"
-      >
+      <virtual-list-item style="display: block;" bind:this={rows[index]}>
         <slot {item} />
-      </div>
+      </virtual-list-item>
     {/each}
   </div>
 
