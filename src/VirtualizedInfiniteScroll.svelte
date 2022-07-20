@@ -9,15 +9,13 @@
 
   export let threshold = 10;
 
-  export let itemHeight: number | number[];
-
   export let scrollContainer: string | HTMLElement;
 
   let mounted: boolean = false;
 
   let root: HTMLElement;
 
-  $: if (mounted) refresh(data, scroller.clientHeight, itemHeight);
+  $: if (mounted) refresh(data, scroller.clientHeight);
 
   let averageHeight = 0;
 
@@ -122,11 +120,7 @@
 
   const heightMap: number[] = [];
 
-  async function refresh(
-    items: T[],
-    viewportHeight: number,
-    itemHeight: number | number[]
-  ) {
+  async function refresh(items: T[], viewportHeight: number) {
     const scrollTop = scroller.scrollTop;
 
     await tick();
