@@ -37,10 +37,13 @@
 
     const scrollTop = scroller.scrollTop;
 
+    const offset =
+      root.getBoundingClientRect().y + scroller.scrollTop + window.scrollY;
+
     while (i < data.length) {
       const rowHeight = heightMap[i];
 
-      if (y + rowHeight > scrollTop - root.offsetTop) {
+      if (y + rowHeight > scrollTop - offset) {
         startIndex = i;
         top = y;
 
@@ -168,12 +171,12 @@
 </script>
 
 {#if table}
-  <tbody>
+  <tbody bind:this={root}>
     <tr style="height: {top}px;" />
     {#each sliced as { item, index } (startIndex + index)}
-      <virtual-list-item style="display: block;" bind:this={rows[index]}>
+      <tr bind:this={rows[index]}>
         <slot {item} />
-      </virtual-list-item>
+      </tr>
     {/each}
     <tr style="height: {bottom}px;" />
   </tbody>
