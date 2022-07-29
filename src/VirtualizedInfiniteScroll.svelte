@@ -86,7 +86,7 @@
 
       const d = actual - expected;
 
-      scroller.scrollTo(0, scrollTop + d);
+      scroller.scrollTo(scroller.scrollLeft, scrollTop + d);
     }
   }
 
