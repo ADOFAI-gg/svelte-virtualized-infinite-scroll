@@ -21,6 +21,8 @@
 
   let scroller: HTMLElement;
 
+  export let table: boolean = false;
+
   async function onScroll() {
     const oldStart = startIndex;
 
@@ -165,20 +167,32 @@
     .map((x, i) => ({ item: x, index: i }));
 </script>
 
-<div>
-  <div
-    class="flex flex-col"
-    bind:this={root}
-    style="padding-top: {top}px; padding-bottom: {bottom}px;"
-  >
+{#if table}
+  <tbody>
+    <tr style="height: {top}px;" />
     {#each sliced as { item, index } (startIndex + index)}
       <virtual-list-item style="display: block;" bind:this={rows[index]}>
         <slot {item} />
       </virtual-list-item>
     {/each}
-  </div>
+    <tr style="height: {bottom}px;" />
+  </tbody>
+{:else}
+  <div>
+    <div
+      class="flex flex-col"
+      bind:this={root}
+      style="padding-top: {top}px; padding-bottom: {bottom}px;"
+    >
+      {#each sliced as { item, index } (startIndex + index)}
+        <virtual-list-item style="display: block;" bind:this={rows[index]}>
+          <slot {item} />
+        </virtual-list-item>
+      {/each}
+    </div>
 
-  {#if hasMore}
-    <slot name="loading" />
-  {/if}
-</div>
+    {#if hasMore}
+      <slot name="loading" />
+    {/if}
+  </div>
+{/if}
