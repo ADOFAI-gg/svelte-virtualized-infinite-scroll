@@ -163,7 +163,6 @@
   let updating = false;
 
   $: {
-    console.log(lastLength, data.length);
     if (endIndex > data.length - threshold && hasMore && !updating) {
       updating = true;
       dispatch('more', { offset: data.length });
