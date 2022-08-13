@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy, onMount, tick } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
 
   type T = $$Generic;
 
@@ -37,8 +37,7 @@
 
     const scrollTop = scroller.scrollTop;
 
-    const offset =
-      root.getBoundingClientRect().y + scroller.scrollTop + window.scrollY;
+    const offset = root.getBoundingClientRect().y + scroller.scrollTop + window.scrollY;
 
     while (i < data.length) {
       const rowHeight = heightMap[i];
@@ -92,24 +91,24 @@
 
   onMount(() => {
     scroller =
-      typeof scrollContainer === "string"
+      typeof scrollContainer === 'string'
         ? document.querySelector(scrollContainer)!
         : scrollContainer;
 
-    scroller.addEventListener("scroll", onScroll);
+    scroller.addEventListener('scroll', onScroll);
 
     scrollY = scroller.scrollTop;
 
-    window.addEventListener("resize", onScroll);
+    window.addEventListener('resize', onScroll);
 
     mounted = true;
   });
 
   onDestroy(() => {
-    scroller?.removeEventListener("scroll", onScroll);
+    scroller?.removeEventListener('scroll', onScroll);
 
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", onScroll);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', onScroll);
     }
 
     mounted = false;
@@ -159,15 +158,26 @@
 
   const dispatch = createEventDispatcher();
 
+  let lastLength = 0;
+
+  let updating = false;
+
   $: {
-    if (endIndex > data.length - threshold && hasMore) {
-      dispatch("more", { offset: data.length });
+    console.log(lastLength, data.length);
+    if (endIndex > data.length - threshold && hasMore && !updating) {
+      updating = true;
+      dispatch('more', { offset: data.length });
     }
   }
 
-  $: sliced = data
-    .slice(startIndex, endIndex)
-    .map((x, i) => ({ item: x, index: i }));
+  $: {
+    if (data.length !== lastLength) {
+      updating = false;
+      lastLength = data.length;
+    }
+  }
+
+  $: sliced = data.slice(startIndex, endIndex).map((x, i) => ({ item: x, index: i }));
 </script>
 
 {#if table}
