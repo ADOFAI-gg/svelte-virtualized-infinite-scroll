@@ -9,13 +9,17 @@
 
   export let threshold = 10;
 
-  export let scrollContainer: string | HTMLElement;
+  export let scrollContainer: string | HTMLElement | Window;
 
   let mounted: boolean = false;
 
   let root: HTMLElement;
 
-  $: if (mounted) refresh(data, scroller.clientHeight);
+  $: isWindow = typeof window !== 'undefined' && scrollContainer === window;
+
+  $: if (mounted) refresh(data, isWindow ? document.body.clientHeight : scroller.clientHeight);
+
+  $: if (data.length) onScroll();
 
   let averageHeight = 0;
 
@@ -37,7 +41,8 @@
 
     const scrollTop = scroller.scrollTop;
 
-    const offset = root.getBoundingClientRect().y + scroller.scrollTop + window.scrollY;
+    const offset =
+      root.getBoundingClientRect().y + scroller.scrollTop + document.scrollingElement.scrollTop;
 
     while (i < data.length) {
       const rowHeight = heightMap[i];
@@ -90,10 +95,13 @@
   }
 
   onMount(() => {
-    scroller =
-      typeof scrollContainer === 'string'
+    scroller = (
+      scrollContainer === window
+        ? (window as unknown as HTMLElement)
+        : typeof scrollContainer === 'string'
         ? document.querySelector(scrollContainer)!
-        : scrollContainer;
+        : scrollContainer
+    ) as HTMLElement;
 
     scroller.addEventListener('scroll', onScroll);
 
