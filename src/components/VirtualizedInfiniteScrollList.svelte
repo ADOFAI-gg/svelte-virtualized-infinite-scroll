@@ -4,7 +4,7 @@
 
   export let itemHeight: number;
 
-  // export let itemSpacing = 0;
+  export let itemSpacing = 0;
 
   export let items: T[];
 
@@ -25,19 +25,27 @@
   $: onScroll = async () => {
     if (!container || !scrollElement) return;
 
-    const from = Math.max(Math.floor(scrollElement.scrollTop / itemHeight), 0);
+    let from = scrollElement.scrollTop;
 
-    const to = Math.min(
-      Math.ceil(
-        (scrollElement.scrollTop + scrollElement.offsetHeight) / itemHeight
-      ),
+    let to = scrollElement.scrollTop + scrollElement.offsetHeight;
+
+    const start = Math.max(Math.floor(from / (itemHeight + itemSpacing)), 0);
+
+    const end = Math.min(
+      Math.ceil(to / (itemHeight + itemSpacing)),
       items.length
     );
 
-    if (startIndex !== from) startIndex = from;
-    if (endIndex !== to) endIndex = to;
+    if (startIndex !== start) startIndex = start;
+    if (endIndex !== end) endIndex = end;
 
-    const offset = itemHeight * startIndex;
+    let offset = itemHeight * startIndex;
+
+    if (itemSpacing && startIndex) {
+      const gap = itemSpacing * startIndex - itemSpacing;
+
+      offset += gap;
+    }
 
     if (contentOffset !== offset) contentOffset = offset;
   };
@@ -64,6 +72,12 @@
     }
   }
 
+  $: {
+    if (itemSpacing) {
+      onScroll();
+    }
+  }
+
   $: toRender = items.slice(startIndex, endIndex);
 
   $listenerSubscription;
@@ -74,7 +88,10 @@
   class="virtualized-list-container"
   style="height: {itemHeight * items.length}px;"
 >
-  <div class="virtualized-list-content" style="margin-top: {contentOffset}px;">
+  <div
+    class="virtualized-list-content"
+    style="margin-top: {contentOffset}px; gap: {itemSpacing}px;"
+  >
     {#each toRender as item}
       <div style="height: {itemHeight}px;">
         <slot {item} />
@@ -91,5 +108,7 @@
   .virtualized-list-content {
     position: absolute;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 </style>
