@@ -7,19 +7,22 @@ extends:
   - prettier
 overrides:
   - files:
-      - "*.svelte"
+      - '*.svelte'
     parser: svelte-eslint-parser
     parserOptions:
       parser:
-        ts: "@typescript-eslint/parser"
-        typescript: "@typescript-eslint/parser"
-parser: "@typescript-eslint/parser"
+        ts: '@typescript-eslint/parser'
+        typescript: '@typescript-eslint/parser'
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: latest
   sourceType: module
 plugins:
-  - "@typescript-eslint"
+  - '@typescript-eslint'
   - svelte
   - prettier
+  - arca
 rules:
   prettier/prettier: error
+  arca/import-ordering: error
+  arca/newline-after-import-section: error
