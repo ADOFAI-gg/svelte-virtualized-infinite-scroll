@@ -8,9 +8,17 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "format": "prettier --loglevel warn --write \"**/*.{ts,tsx,css,md}\"",
     "posttest": "npm run format",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.0-alpha.46",
+    "@storybook/addon-interactions": "^7.0.0-alpha.46",
+    "@storybook/addon-links": "^7.0.0-alpha.46",
+    "@storybook/svelte": "^7.0.0-alpha.46",
+    "@storybook/svelte-vite": "^7.0.0-alpha.46",
+    "@storybook/testing-library": "^0.0.13",
     "@sveltejs/vite-plugin-svelte": "^1.1.0",
     "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
@@ -19,11 +27,13 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-arca": "^0.16.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-storybook": "^0.6.6",
     "eslint-plugin-svelte": "^2.11.0",
     "husky": ">=7",
     "lint-staged": ">=10",
     "prettier": ">=2",
     "prettier-plugin-svelte": "^2.8.0",
+    "storybook": "^7.0.0-alpha.46",
     "svelte": "^3.52.0",
     "svelte-check": "^2.9.2",
     "svelte-eslint-parser": "^0.19.3",
@@ -41,5 +51,6 @@
     "default": "./dist/svelte-virtualized-infinite-scroll.js"
   },
   "main": "./dist/svelte-virtualized-infinite-scroll.umd.cjs",
-  "types": "./dist/main.d.ts"
+  "types": "./dist/main.d.ts",
+  "dependencies": {}
 }
