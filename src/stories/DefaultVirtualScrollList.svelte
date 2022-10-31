@@ -5,12 +5,15 @@
 
   let container: HTMLDivElement;
 
+  let start: number;
+  let end: number;
+
   let items: number[] = [];
 
   const addItems = () => {
     items = [
       ...items,
-      ...new Array(100).fill(undefined).map((x, i) => items.length + i),
+      ...new Array(10000).fill(undefined).map((_x, i) => items.length + i),
     ];
   };
 
@@ -21,10 +24,14 @@
 
 <h1>Virtualized Infinite Scroll List</h1>
 
-<button on:click={addItems}>Add 100 items to bottom</button>
+<button on:click={addItems}>Add 10000 items to bottom</button>
+
+<div>{start} - {end}</div>
 
 <div bind:this={container} class="container">
   <VirtualizedInfiniteScrollList
+    bind:startIndex={start}
+    bind:endIndex={end}
     itemHeight={128}
     {items}
     scroller={container}
