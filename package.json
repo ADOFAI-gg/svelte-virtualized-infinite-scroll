@@ -52,5 +52,8 @@
   },
   "main": "./dist/svelte-virtualized-infinite-scroll.umd.cjs",
   "types": "./dist/main.d.ts",
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "./dist/**/*"
+  ]
 }
