@@ -11,10 +11,10 @@
 
   $: listenerSubscription = {
     subscribe: () => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      if (!scrollElement) return () => {};
-
       const elementToListen = isWindow ? window : scrollElement;
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      if (!elementToListen) return () => {};
 
       const listener = () => {
         console.log(
