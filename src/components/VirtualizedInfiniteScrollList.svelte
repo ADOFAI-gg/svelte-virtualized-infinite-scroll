@@ -86,7 +86,8 @@
 <div
   bind:this={container}
   class="virtualized-list-container"
-  style="height: {itemHeight * items.length}px;"
+  style="height: {itemHeight * items.length +
+    (itemSpacing ? itemSpacing * items.length - itemSpacing : 0)}px;"
 >
   <div
     class="virtualized-list-content"
