@@ -37,5 +37,10 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{ts,tsx,css,md}": "prettier --write"
-  }
+  },
+  "exports": {
+    "default": "./dist/svelte-virtualized-infinite-scroll.js"
+  },
+  "main": "./dist/svelte-virtualized-infinite-scroll.umd.cjs",
+  "types": "./dist/main.d.ts"
 }
