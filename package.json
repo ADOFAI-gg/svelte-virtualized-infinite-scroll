@@ -5,9 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "format": "prettier --loglevel warn --write \"**/*.{ts,tsx,css,md}\"",
     "posttest": "npm run format",
@@ -33,7 +31,8 @@
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",
-    "vite": "^3.2.0"
+    "vite": "^3.2.0",
+    "vite-plugin-dts": "^1.6.6"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
