@@ -1,3 +1,1 @@
-console.log('Hi');
-
-export const hello = 'world';
+export { default as VirtualizedInfiniteScrollList } from './components/VirtualizedInfiniteScrollList.svelte';
