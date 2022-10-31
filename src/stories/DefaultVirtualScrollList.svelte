@@ -7,7 +7,7 @@
 <h1>Virtualized Infinite Scroll List</h1>
 
 <div bind:this={container} class="container">
-  <VirtualizedInfiniteScrollList />
+  <VirtualizedInfiniteScrollList scroller={container} />
 </div>
 
 <style>
