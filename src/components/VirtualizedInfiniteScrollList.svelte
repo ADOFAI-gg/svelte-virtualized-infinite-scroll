@@ -27,7 +27,7 @@
 
     const from = Math.max(Math.floor(scrollElement.scrollTop / itemHeight), 0);
 
-    const to = Math.max(
+    const to = Math.min(
       Math.ceil(
         (scrollElement.scrollTop + scrollElement.offsetHeight) / itemHeight
       ),
