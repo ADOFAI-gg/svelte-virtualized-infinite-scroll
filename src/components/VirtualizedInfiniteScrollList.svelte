@@ -35,4 +35,10 @@
   $listenerSubscription;
 </script>
 
-<div bind:this={container}>content</div>
+<div>
+  <!-- upper padding -->
+  <div />
+  <div bind:this={container}>content</div>
+  <!-- lower padding -->
+  <div />
+</div>
