@@ -56,5 +56,15 @@
   "dependencies": {},
   "files": [
     "./dist/**/*"
-  ]
+  ],
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "master",
+      {
+        "name": "develop",
+        "prerelease": true
+      }
+    ]
+  }
 }
