@@ -26,3 +26,4 @@ rules:
   prettier/prettier: error
   arca/import-ordering: error
   arca/newline-after-import-section: error
+  arca/melted-constructs: error
