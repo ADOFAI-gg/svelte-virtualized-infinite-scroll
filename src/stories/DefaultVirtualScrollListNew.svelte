@@ -29,7 +29,9 @@
 <div>{start} - {end}</div>
 
 <div bind:this={container} class="container">
-  <VirtualizedInfiniteScrollListNew scroller={container} {items} />
+  {#if container}
+    <VirtualizedInfiniteScrollListNew scroller={container} {items} />
+  {/if}
 </div>
 
 <style>
