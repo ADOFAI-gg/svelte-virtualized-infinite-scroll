@@ -30,7 +30,16 @@
 
 <div bind:this={container} class="container">
   {#if container}
-    <VirtualizedInfiniteScrollListNew scroller={container} {items} />
+    <VirtualizedInfiniteScrollListNew
+      estimateSize={() => 100}
+      scroller={container}
+      {items}
+      let:item
+    >
+      <div class="item">
+        {item}
+      </div>
+    </VirtualizedInfiniteScrollListNew>
   {/if}
 </div>
 
@@ -43,7 +52,7 @@
   }
 
   .container :global(.item) {
-    height: 100%;
+    height: 100px;
     border: 1px solid #f00;
   }
 </style>
