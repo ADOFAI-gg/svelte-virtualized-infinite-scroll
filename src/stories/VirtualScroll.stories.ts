@@ -16,7 +16,3 @@ export const Default = () => ({
 export const WithSpacing = () => ({
   Component: DefaultVirtualScrollListSpaced,
 });
-
-export const NewDefault = () => ({
-  Component: DefaultVirtualScrollListNew,
-});
