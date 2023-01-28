@@ -3,7 +3,7 @@
 
   export let scroller: HTMLDivElement;
 
-  export let items: T;
+  export let items: T[];
 
   $: console.log(items);
 </script>
