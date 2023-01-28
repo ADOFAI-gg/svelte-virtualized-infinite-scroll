@@ -2,6 +2,7 @@
   import { createVirtualizer } from '@tanstack/svelte-virtual';
   import type { Virtualizer } from '@tanstack/virtual-core';
   import type { Readable } from 'svelte/store';
+  import VirtualizedScrollListItem from './VirtualizedScrollListItem.svelte';
 
   type T = $$Generic;
 
@@ -30,9 +31,9 @@
   >
     <div style="--start-pos: {items[0].start}px;" class="content">
       {#each items as item}
-        <div>
+        <VirtualizedScrollListItem {item}>
           <slot item={originalItems[item.index]} />
-        </div>
+        </VirtualizedScrollListItem>
       {/each}
     </div>
   </div>
