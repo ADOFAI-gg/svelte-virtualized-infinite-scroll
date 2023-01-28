@@ -35,6 +35,7 @@
     "lint-staged": ">=10",
     "prettier": ">=2",
     "prettier-plugin-svelte": "^2.8.0",
+    "sass": "^1.57.1",
     "storybook": "^7.0.0-alpha.46",
     "svelte": "^3.52.0",
     "svelte-check": "^2.9.2",
