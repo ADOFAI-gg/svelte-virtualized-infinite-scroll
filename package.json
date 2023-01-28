@@ -21,6 +21,7 @@
     "@storybook/svelte-vite": "^7.0.0-alpha.46",
     "@storybook/testing-library": "^0.0.13",
     "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "@tanstack/virtual-core": "^3.0.0-alpha.1",
     "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
