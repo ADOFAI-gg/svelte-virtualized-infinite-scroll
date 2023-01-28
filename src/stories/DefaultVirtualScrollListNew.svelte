@@ -52,7 +52,7 @@
   }
 
   .container :global(.item) {
-    height: 100px;
     border: 1px solid #f00;
+    height: 100px;
   }
 </style>

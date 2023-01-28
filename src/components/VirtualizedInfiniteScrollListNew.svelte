@@ -19,6 +19,26 @@
       estimateSize,
     });
 
+  let countUpdated = false;
+
+  $: {
+    originalItems.length;
+    countUpdated = true;
+  }
+
+  $: {
+    if (countUpdated) {
+      $virtualizer.setOptions({
+        ...$virtualizer.options,
+        count: originalItems.length,
+      });
+
+      $virtualizer.measure();
+
+      countUpdated = false;
+    }
+  }
+
   $: items = $virtualizer.getVirtualItems();
 
   export { originalItems as items };
