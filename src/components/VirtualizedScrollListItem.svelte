@@ -11,6 +11,9 @@
   $: item.measureElement(el);
 </script>
 
-<div bind:this={el}>
+<div
+  bind:this={el}
+  style="position: absolute; left: 0; top: 0; width: 100%; transform: translateY({item.start}px);"
+>
   <slot />
 </div>
