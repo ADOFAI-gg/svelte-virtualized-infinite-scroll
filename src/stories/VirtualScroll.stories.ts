@@ -1,17 +1,12 @@
-import VirtualizedInfiniteScrollList from '../components/VirtualizedInfiniteScrollList.svelte';
+import VirtualizedInfiniteScrollListNew from '../components/VirtualizedInfiniteScrollList.svelte';
 
-import DefaultVirtualScrollList from './DefaultVirtualScrollList.svelte';
-import DefaultVirtualScrollListSpaced from './DefaultVirtualScrollListSpaced.svelte';
+import DefaultVirtualScrollListNew from './DefaultVirtualScrollListNew.svelte';
 
 export default {
   title: 'Virtualized Infinite Scroll List',
-  component: VirtualizedInfiniteScrollList,
+  component: VirtualizedInfiniteScrollListNew,
 };
 
 export const Default = () => ({
-  Component: DefaultVirtualScrollList,
-});
-
-export const WithSpacing = () => ({
-  Component: DefaultVirtualScrollListSpaced,
+  Component: DefaultVirtualScrollListNew,
 });

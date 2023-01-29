@@ -1,1 +1,1 @@
-export { default as VirtualizedInfiniteScrollList } from './components/VirtualizedInfiniteScrollListNew.svelte';
+export { default as VirtualizedInfiniteScrollList } from './components/VirtualizedInfiniteScrollList.svelte';

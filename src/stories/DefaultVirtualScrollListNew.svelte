@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import VirtualizedInfiniteScrollListNew from '../components/VirtualizedInfiniteScrollListNew.svelte';
+  import VirtualizedInfiniteScrollListNew from '../components/VirtualizedInfiniteScrollList.svelte';
 
   let container: HTMLDivElement;
 
