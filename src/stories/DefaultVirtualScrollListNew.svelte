@@ -5,9 +5,6 @@
 
   let container: HTMLDivElement;
 
-  let start: number;
-  let end: number;
-
   let items: number[] = [];
 
   const addItems = () => {
@@ -25,8 +22,6 @@
 <h1>Virtualized Infinite Scroll List</h1>
 
 <button on:click={addItems}>Add 10000 items to bottom</button>
-
-<div>{start} - {end}</div>
 
 <div bind:this={container} class="container">
   {#if container}
