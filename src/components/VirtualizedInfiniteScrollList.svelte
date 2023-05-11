@@ -1,23 +1,31 @@
 <script lang="ts">
-  import { createVirtualizer } from '@tanstack/svelte-virtual';
+  import {
+    createVirtualizer,
+    createWindowVirtualizer,
+  } from '@tanstack/svelte-virtual';
   import type { Virtualizer } from '@tanstack/virtual-core';
   import type { Readable } from 'svelte/store';
   import VirtualizedScrollListItem from './VirtualizedScrollListItem.svelte';
 
   type T = $$Generic;
 
-  export let scroller: HTMLDivElement;
+  export let scroller: HTMLDivElement | undefined = undefined;
+  export let window = false;
 
   export let estimateSize: () => number;
 
   let originalItems: T[];
 
-  const virtualizer: Readable<Virtualizer<HTMLDivElement, T>> =
-    createVirtualizer({
-      getScrollElement: () => scroller,
-      count: originalItems.length,
-      estimateSize,
-    });
+  const virtualizer: Readable<Virtualizer<HTMLDivElement | Window, T>> = window
+    ? createWindowVirtualizer({
+        count: originalItems.length,
+        estimateSize,
+      })
+    : createVirtualizer({
+        getScrollElement: () => scroller,
+        count: originalItems.length,
+        estimateSize,
+      });
 
   let countUpdated = false;
 

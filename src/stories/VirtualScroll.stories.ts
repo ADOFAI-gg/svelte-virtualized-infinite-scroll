@@ -1,12 +1,17 @@
-import VirtualizedInfiniteScrollListNew from '../components/VirtualizedInfiniteScrollList.svelte';
+import VirtualizedInfiniteScrollList from '../components/VirtualizedInfiniteScrollList.svelte';
 
-import DefaultVirtualScrollListNew from './DefaultVirtualScrollListNew.svelte';
+import DefaultVirtualScrollList from './DefaultVirtualScrollList.svelte';
+import WindowVirtualScrollList from './WindowVirtualScrollList.svelte';
 
 export default {
   title: 'Virtualized Infinite Scroll List',
-  component: VirtualizedInfiniteScrollListNew,
+  component: VirtualizedInfiniteScrollList,
 };
 
 export const Default = () => ({
-  Component: DefaultVirtualScrollListNew,
+  Component: DefaultVirtualScrollList,
+});
+
+export const WindowScroller = () => ({
+  Component: WindowVirtualScrollList,
 });
