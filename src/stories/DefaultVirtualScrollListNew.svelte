@@ -10,7 +10,7 @@
   const addItems = () => {
     items = [
       ...items,
-      ...new Array(10000).fill(undefined).map((_x, i) => items.length + i),
+      ...new Array(100).fill(undefined).map((_x, i) => items.length + i),
     ];
   };
 
@@ -21,7 +21,7 @@
 
 <h1>Virtualized Infinite Scroll List</h1>
 
-<button on:click={addItems}>Add 10000 items to bottom</button>
+<button on:click={addItems}>Add 100 items to bottom</button>
 
 <div bind:this={container} class="container">
   {#if container}
@@ -48,6 +48,7 @@
 
   .container :global(.item) {
     border: 1px solid #f00;
+    box-sizing: border-box;
     height: 100px;
   }
 </style>
