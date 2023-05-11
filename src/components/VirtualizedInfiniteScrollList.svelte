@@ -53,16 +53,11 @@
 </script>
 
 <div style="height: {$virtualizer.getTotalSize()}px" class="virtual-container">
-  <!-- <div
-      style="transform: translateY({items?.[0].start ?? 0}px);"
-      class="content"
-    > -->
   {#each items as item}
     <VirtualizedScrollListItem {item}>
       <slot item={originalItems[item.index]} />
     </VirtualizedScrollListItem>
   {/each}
-  <!-- </div> -->
 </div>
 
 <style lang="scss">
